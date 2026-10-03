@@ -1,0 +1,2 @@
+TUIK logo (egitim amacli) kaynagi: ../speech-to-text-lab/public/brand/SOURCE.txt
+Logo (c) Turkiye Istatistik Kurumu. Resmi urun degildir.

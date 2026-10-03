@@ -88,7 +88,7 @@ async function checkBackend() {
 // --- skor render ---
 function renderScores(scores, acoustic, meta) {
   if (!scores) {
-    scoresEl.innerHTML = `<div class="empty"><b>Henüz skor yok</b><p>Servis sonucu gelince duygu dağılımı burada görünür.</p></div>`;
+    scoresEl.innerHTML = `<div class="empty"><b>—</b><p>${t("empty_transcript")}</p></div>`;
     return;
   }
   scoresEl.innerHTML = "";
@@ -147,8 +147,8 @@ function renderAudit(analysis) {
     auditEl.innerHTML =
       `<div class="audit-empty"><div class="audit-empty-ico">◉</div>` +
       (analysis?.hata
-        ? `<b>Analiz yapılamadı</b><p>${analysis.hata}</p><p>Yeni bir dosya gönderdiğinde burası otomatik dolar.</p>`
-        : `<b>Henüz denetim yok</b><p>1. Ses dosyanı seç → 2. Servise Gönder'e bas.<br>Transkript bitince T1–T13 denetimi burada rozetler ve puanlarla görünür.</p>`) +
+        ? `<b>—</b><p>${analysis.hata}</p>`
+        : `<b>—</b><p>${t("empty_transcript")}</p>`) +
       `</div>`;
     return;
   }
@@ -257,8 +257,7 @@ function renderParts(meta) {
   const parts = meta?.parcalar || [];
   const diller = meta?.diller || [];
   if (!parts.length) { el.textContent = ""; return; }
-  el.innerHTML = `<b>Örneklem:</b> ${meta.orneklem_sn || ""}sn × 2 parça · tespit edilen dil(ler): <b>${diller.join(", ") || "—"}</b>` +
-    parts.map((p) => `<div>• <b>${p.etiket}</b> [${p.baslangic_sn} sn · ${p.dil}] ${p.metin || ""}</div>`).join("");
+  el.innerHTML = parts.map((p) => `<div>• <b>${p.etiket}</b> [${p.baslangic_sn} sn · ${p.dil}] ${p.metin || ""}</div>`).join("");
 }
 $("btnTex").onclick = () => {
   if (!lastResult?.id) return setStatus("Önce bir sonuç aç.");
@@ -323,7 +322,7 @@ async function loadReportsTable() {
         b.className = cls; b.textContent = label; b.type = "button"; b.onclick = (e) => { e.stopPropagation(); fn(); };
         td.appendChild(b);
       };
-      mk("İncele", async () => {
+      mk(t("op_inspect"), async () => {
         const full = await (await fetch(`${bUrl()}/api/records/${r.id}`)).json();
         const pick = (v) => (typeof v === "string" ? JSON.parse(v) : v);
         lastResult = { id: r.id, text: full.transcript, chunks: pick(full.segments) || [],
@@ -340,15 +339,15 @@ async function loadReportsTable() {
       mk("HTML", () => window.open(`${bUrl()}/api/records/${r.id}/report.html`, "_blank"));
       if (r.pdf) mk("PDF", () => window.open(`${bUrl()}/api/records/${r.id}/report.pdf`, "_blank"));
       if (r.tex) mk("TEX", () => window.open(`${bUrl()}/api/records/${r.id}/report.tex`, "_blank"));
-      mk("Tekrar Skorla", async () => {
-        const model = prompt("Hangi modelle tekrar skorlansın? (tiny/base/small/medium)", "medium") || "medium";
+      mk(t("op_rescore"), async () => {
+        const model = prompt("model? (tiny/base/small/medium)", "medium") || "medium";
         const res = await fetch(`${bUrl()}/api/records/${r.id}/rescore?model=${encodeURIComponent(model)}`, { method: "POST" });
         if (!res.ok) { alert("Hata: " + (await res.text()).slice(0, 200)); return; }
         const nj = await res.json();
         alert(`v${nj.version} işlemi başladı (id: ${nj.id}). Tablodan izleyebilirsin.`);
         loadReportsTable();
       });
-      mk("Sil", async () => {
+      mk(t("op_del"), async () => {
         if (!confirm(`${r.filename} silinsin mi?`)) return;
         await fetch(`${bUrl()}/api/records/${r.id}`, { method: "DELETE" });
         loadReportsTable(); loadRecords();
@@ -371,7 +370,7 @@ async function loadRecords() {
       const st = j.status === "error" ? `HATA: ${(j.error || "").slice(0, 60)}` : (j.transcript || "").slice(0, 60);
       li.innerHTML = `<span>${(j.created_at || "").slice(0, 19)} — ${j.filename} — ${j.status} — ${st}…</span> `;
       const del = document.createElement("button");
-      del.textContent = "Sil";
+      del.textContent = t("op_del");
       del.className = "btn danger";
       del.style.padding = "2px 8px";
       del.onclick = async (e) => {
@@ -444,3 +443,31 @@ renderAudit(null);
 setStep(1);
 netCheck();
 checkBackend();
+
+// --- dil seçici ---
+(function initLocale() {
+  const bar = $("localeBar");
+  LOCALES.forEach((loc) => {
+    const b = document.createElement("button");
+    b.className = "btn ghost";
+    b.style.padding = "2px 9px";
+    b.dataset.loc = loc;
+    b.textContent = LOCALE_NAMES[loc];
+    b.onclick = () => setLocale(loc);
+    bar.appendChild(b);
+  });
+  window.__onLocale = () => {
+    if (lastResult) {
+      renderScores(lastResult.scores, lastResult.acoustic, lastResult.meta);
+      renderAudit(lastResult.analysis);
+      renderParts(lastResult.meta);
+    } else {
+      transcriptEl.textContent = t("empty_transcript");
+      renderScores(null);
+      renderAudit(null);
+    }
+    if ($("reportsView").style.display !== "none") loadReportsTable();
+    setStatus(t("st_ready"), 0);
+  };
+  setLocale(LOCALE);
+})();

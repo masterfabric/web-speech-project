@@ -1,14 +1,24 @@
-<div align="center">
+<p align="center">
+  <img src="assets/brand/tuik-logo.svg" alt="TÜİK logosu (eğitim amaçlı)" width="128" />
+</p>
 
-# ◉ web-speech-project
+<h1 align="center">web-speech-project</h1>
 
-### HİA Alo124 Kalite Denetim — Ses → Transkript → T1-T13 Skor → LaTeX Rapor
+<p align="center">
+  <strong>HİA Alo124 Kalite Denetim — Ses → Transkript → T1-T13 Skor → LaTeX Rapor</strong><br />
+  Eğitim amaçlı prototip · Resmi TÜİK ürünü değildir
+</p>
 
-**faster-whisper** · **opencode muse-spark 1.3** · **tectonic LaTeX** · **FastAPI + statik web**
+<p align="center">
+  <a href="https://github.com/masterfabric/web-speech-project"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-masterfabric%2Fweb--speech--project-ae1615?style=flat-square&logo=github" /></a>
+  <img alt="STT" src="https://img.shields.io/badge/STT-faster--whisper-0a0a0a?style=flat-square" />
+  <img alt="Analiz" src="https://img.shields.io/badge/Analiz-opencode%20muse--spark-ae1615?style=flat-square" />
+  <img alt="Rapor" src="https://img.shields.io/badge/Rapor-LaTeX%20tectonic-0a0a0a?style=flat-square" />
+  <img alt="API key" src="https://img.shields.io/badge/API_key-yok-ae1615?style=flat-square" />
+  <img alt="Theme" src="https://img.shields.io/badge/Theme-TÜİK%20red%20%23ae1615-ae1615?style=flat-square" />
+</p>
 
-![yerel](https://img.shields.io/badge/yerel-%25100-blue) ![api-key](https://img.shields.io/badge/api_key-yok-green) ![python](https://img.shields.io/badge/python-3.9%2B-yellow) ![lisans](https://img.shields.io/badge/model-whisper-orange)
-
-</div>
+> TÜİK logosu yalnızca eğitim/demo bağlamında kullanılır. Bu repo **resmi bir TÜİK ürünü, onayı veya yayını değildir**.
 
 ---
 

@@ -3,7 +3,15 @@
   --radius: 14px;
   --gap: 14px;
   --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* TÜİK marka kırmızısı (referans: speech-to-text-lab) */
+  --tuik: #ae1615;
+  --tuik-dim: #8b1211;
+  --tuik-deep: #6e0e0d;
+  --tuik-soft: #fdf2f2;
+  --tuik-muted: #f8e0e0;
 }
+::selection { background: #ae1615; color: #fff; }
+:focus-visible { outline: 2px solid #ae1615; outline-offset: 2px; }
 [data-theme="dark"] {
   color-scheme: dark;
   --bg: #0c0e13;
@@ -13,8 +21,8 @@
   --text: #e9ecf3;
   --muted: #9aa4b8;
   --field: #0e1219;
-  --accent: #5aa9ff;
-  --accent-ink: #06121f;
+  --accent: #e0342c;
+  --accent-ink: #ffffff;
   --drop: #1a2231;
 }
 [data-theme="light"] {
@@ -26,7 +34,7 @@
   --text: #131722;
   --muted: #5d6a82;
   --field: #f2f5fa;
-  --accent: #1a68d1;
+  --accent: #ae1615;
   --accent-ink: #ffffff;
   --drop: #f2f6fd;
 }
@@ -40,6 +48,7 @@ body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--
 .brand { display: flex; gap: 10px; align-items: center; }
 .brand small { display: block; color: var(--muted); font-size: 12px; }
 .logo { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-size: 20px; }
+.brand-logo { width: 44px; height: 44px; flex: none; border-radius: 10px; background: #fff; padding: 4px; }
 .top-actions { display: flex; gap: 8px; align-items: center; }
 .pill { font-size: 12px; border: 1px solid var(--line); padding: 5px 10px; border-radius: 999px; color: var(--muted); }
 
@@ -59,8 +68,8 @@ body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--
 .steps li.done i { border-color: #1e9e4a; background: #1e9e4a; color: #fff; }
 .steps li.done:not(:last-child)::after { background: #1e9e4a; }
 
-/* TÜİK kurumsal giydirme */
-.kurumsal { background: #0f2a44; color: #fff; font-size: 13px; }
+/* TÜİK kurumsal giydirme (siyah/beyaz + marka kırmızısı) */
+.kurumsal { background: #0a0a0a; color: #fff; font-size: 13px; border-bottom: 3px solid var(--tuik); }
 .kurumsal-in { display: flex; align-items: center; gap: 10px; padding-top: 8px; padding-bottom: 8px; }
 .k-flag { width: 26px; height: 18px; flex: none; border-radius: 3px;
   background: linear-gradient(#e30a17 0 100%); position: relative; }
@@ -100,6 +109,11 @@ body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--
 .tbl th { background: var(--bg2); }
 .tbl .row-btns { display: flex; gap: 4px; flex-wrap: wrap; }
 .tbl .row-btns .btn { padding: 3px 9px; font-size: 12px; }
+
+/* dil seçici */
+.localebar { display: flex; gap: 4px; justify-content: center; flex-wrap: wrap; }
+.localebar .btn.active { border-color: var(--accent); color: var(--accent); }
+[dir="rtl"] .topbar-in, [dir="rtl"] .kurumsal-in { direction: rtl; }
 
 /* servis rozeti + ikon buton */
 .pill.svc { display: inline-flex; align-items: center; gap: 7px; }
