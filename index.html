@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
   <title>web-speech-project — Servis Bazlı Ses Analizi</title>
-  <link rel="stylesheet" href="./styles.css?v=9" />
+  <link rel="stylesheet" href="./styles.css?v=10" />
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
@@ -39,13 +39,13 @@
   <div class="techstrip">
     <div class="wrap techstrip-in">
       <span class="muted small">Altyapı:</span>
-      <span class="tech" style="--bc:#4d9fff"><i></i>faster-whisper</span>
-      <span class="tech" style="--bc:#c084fc"><i></i>opencode · muse-spark 1.3</span>
-      <span class="tech" style="--bc:#3ddc84"><i></i>tectonic LaTeX</span>
-      <span class="tech" style="--bc:#26a69a"><i></i>FastAPI</span>
-      <span class="tech" style="--bc:#7dd3a8"><i></i>FFmpeg</span>
-      <span class="tech" style="--bc:#5b9bd5"><i></i>SQLite</span>
-      <span class="tech" style="--bc:#f2c94c"><i></i>Vanilla JS</span>
+      <span class="tech" style="--bc:#4d9fff"><i data-lucide="audio-lines"></i>faster-whisper</span>
+      <span class="tech" style="--bc:#c084fc"><i data-lucide="sparkles"></i>opencode · muse-spark 1.3</span>
+      <span class="tech" style="--bc:#3ddc84"><i data-lucide="file-text"></i>tectonic LaTeX</span>
+      <span class="tech" style="--bc:#26a69a"><i data-lucide="zap"></i>FastAPI</span>
+      <span class="tech" style="--bc:#7dd3a8"><i data-lucide="clapperboard"></i>FFmpeg</span>
+      <span class="tech" style="--bc:#5b9bd5"><i data-lucide="database"></i>SQLite</span>
+      <span class="tech" style="--bc:#f2c94c"><i data-lucide="code"></i>Vanilla JS</span>
     </div>
   </div>
   <div id="netBanner" class="netbanner">İnternet bağlantısı yok — model indirme ve servis çağrıları çalışmayabilir. Kayıtlı sonuçlar görüntülenebilir.</div>
@@ -155,7 +155,15 @@
       <iframe id="pdfFrame" style="width:100%;height:480px;border:1px solid var(--line);border-radius:12px;margin-top:10px;display:none"></iframe>
     </section>
 
-    <footer class="foot muted small">web-speech-project · servis bazlı · <span id="year"></span></footer>
+    <footer class="foot">
+      <div class="foot-in">
+        <span class="logo sm" aria-hidden="true">◉</span>
+        <span><b>web-speech-project</b> · TÜİK eğitimi kapsamında
+          <a href="https://github.com/gurkanfikretgunak" target="_blank" rel="noopener">@gurkanfikretgunak</a>
+          tarafından geliştirilmiştir</span>
+      </div>
+      <div class="muted small">HİA Alo124 Kalite Denetim prototipi · <span id="year"></span></div>
+    </footer>
   </main>
 
   <main class="wrap" id="reportsView" style="display:none">
@@ -194,6 +202,6 @@
       document.getElementById("year").textContent = new Date().getFullYear();
     })();
   </script>
-  <script src="./app.js?v=9"></script>
+  <script src="./app.js?v=10"></script>
 </body>
 </html>

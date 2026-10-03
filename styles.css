@@ -71,6 +71,26 @@ body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--
 .techstrip-in { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
 .tech { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
 .tech i { width: 9px; height: 9px; border-radius: 99px; background: var(--bc, var(--accent)); }
+.tech svg { width: 15px; height: 15px; color: var(--bc, var(--accent)); }
+.tech i:has(svg), .tech i svg { border-radius: 0; background: none; }
+
+/* footer */
+.foot { text-align: center; padding: 22px 0 10px; display: grid; gap: 6px; justify-items: center; }
+.foot-in { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.foot a { color: var(--accent); font-weight: 700; text-decoration: none; }
+.foot a:hover { text-decoration: underline; }
+.logo.sm { width: 26px; height: 26px; font-size: 15px; border-radius: 8px; }
+
+/* açık tema renk uyumu */
+[data-theme="light"] .st.evet { background: #c6f0cf; color: #0c5222; }
+[data-theme="light"] .st.hayir { background: #fbd5d5; color: #7c1616; }
+[data-theme="light"] .audit-hero.ok .audit-score { color: #167a37; }
+[data-theme="light"] .audit-hero.warn .audit-score { color: #b57708; }
+[data-theme="light"] .crit.ok .bar > i { background: #167a37; }
+[data-theme="light"] .pill.svc.ok .dot { background: #167a37; }
+[data-theme="light"] .kurumsal { background: #12314f; }
+[data-theme="light"] .steps li.active i { color: #fff; }
+[data-theme="light"] .tchip.lang { color: #fff; }
 
 /* üst menü + rapor tablosu */
 .topnav { display: flex; gap: 6px; }
