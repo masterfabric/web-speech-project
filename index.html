@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
   <title>web-speech-project — Service-Based Audio Analysis</title>
-  <link rel="stylesheet" href="./styles.css?v=11" />
+  <link rel="stylesheet" href="./styles.css?v=12" />
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
@@ -41,10 +41,10 @@
       <span class="muted small" data-i18n="tech_label">Stack:</span>
       <span class="tech" style="--bc:#4d9fff"><i data-lucide="audio-lines"></i>faster-whisper</span>
       <span class="tech" style="--bc:#c084fc"><i data-lucide="sparkles"></i>opencode · muse-spark 1.3</span>
-      <span class="tech" style="--bc:#3ddc84"><i data-lucide="file-text"></i>tectonic LaTeX</span>
-      <span class="tech" style="--bc:#26a69a"><i data-lucide="zap"></i>FastAPI</span>
-      <span class="tech" style="--bc:#7dd3a8"><i data-lucide="clapperboard"></i>FFmpeg</span>
-      <span class="tech" style="--bc:#5b9bd5"><i data-lucide="database"></i>SQLite</span>
+      <span class="tech"><img class="logo-ic" src="./assets/logos/latex.svg?v=1" alt="LaTeX" />tectonic LaTeX</span>
+      <span class="tech"><img class="logo-ic" src="./assets/logos/fastapi.svg?v=1" alt="FastAPI" />FastAPI</span>
+      <span class="tech"><img class="logo-ic" src="./assets/logos/ffmpeg.svg?v=1" alt="FFmpeg" />FFmpeg</span>
+      <span class="tech"><img class="logo-ic" src="./assets/logos/sqlite.svg?v=1" alt="SQLite" />SQLite</span>
       <span class="tech" style="--bc:#f2c94c"><i data-lucide="code"></i>Vanilla JS</span>
     </div>
   </div>
@@ -60,9 +60,9 @@
         <p class="muted" data-i18n="hero_p">Processing runs on the Python backend (faster-whisper); records live in SQLite on the service. The browser is just a client.</p>
       </div>
       <ol class="steps">
-        <li id="step1" class="active"><i>1</i><span data-i18n="step1">Upload</span></li>
-        <li id="step2"><i>2</i><span data-i18n="step2">Send to service</span></li>
-        <li id="step3"><i>3</i><span data-i18n="step3">Score + download</span></li>
+        <li id="step1" class="active"><i>1</i><span><b data-i18n="step1">Upload</b><small data-i18n="step1d">wav · mp3 · m4a · aac + more</small></span></li>
+        <li id="step2"><i>2</i><span><b data-i18n="step2">Send to service</b><small data-i18n="step2d">faster-whisper tiny→medium, language detect</small></span></li>
+        <li id="step3"><i>3</i><span><b data-i18n="step3">Score + download</b><small data-i18n="step3d">T1–T13 audit, LaTeX PDF + archive</small></span></li>
       </ol>
     </section>
 
@@ -156,6 +156,7 @@
     </section>
 
     <footer class="foot">
+      <div class="kvkk" data-i18n="kvkk">Educational use only — no personal data under KVKK is processed. Samples come from public Common Voice data.</div>
       <div class="foot-in">
         <span class="logo sm" aria-hidden="true">◉</span>
         <span><b>web-speech-project</b> · <span data-i18n="foot_a">built for TÜİK training by</span>
@@ -204,6 +205,6 @@
     })();
   </script>
   <script src="./i18n.js?v=1"></script>
-  <script src="./app.js?v=11"></script>
+  <script src="./app.js?v=12"></script>
 </body>
 </html>

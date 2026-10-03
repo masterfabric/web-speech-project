@@ -17,6 +17,7 @@ function setStatus(s, p = null) {
   const st = /hata|başarısız|ulaşılamadı|bulunamadı|yok|kaldırıldı/.test(low) ? "error"
     : /bitti|hazır|kaydedildi/.test(low) ? "done" : "working";
   statusEl.dataset.state = st;
+  progress.classList.toggle("working", st === "working");
   if (p !== null) progress.value = p;
 }
 

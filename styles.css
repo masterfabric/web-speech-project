@@ -59,7 +59,10 @@ body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--
 .hero-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin: 16px 0 4px; display: grid; gap: 16px; }
 .hero-card h1 { margin: 0 0 6px; font-size: clamp(20px, 3.2vw, 28px); letter-spacing: -0.02em; }
 .steps { list-style: none; display: flex; gap: 0; margin: 0; padding: 0; }
-.steps li { flex: 1; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.steps li { flex: 1; display: flex; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.steps li > span { display: grid; gap: 2px; }
+.steps li small { font-weight: 400; font-size: 12px; }
+.steps li i { margin-top: 1px; }
 .steps li i { width: 26px; height: 26px; flex: none; display: grid; place-items: center; border-radius: 99px; border: 2px solid var(--line); background: var(--bg2); font-style: normal; font-size: 13px; }
 .steps li:not(:last-child)::after { content: ""; flex: 1; height: 2px; background: var(--line); margin: 0 8px; border-radius: 2px; }
 .steps li.active { color: var(--text); }
@@ -67,6 +70,20 @@ body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--
 .steps li.done { color: var(--text); }
 .steps li.done i { border-color: #1e9e4a; background: #1e9e4a; color: #fff; }
 .steps li.done:not(:last-child)::after { background: #1e9e4a; }
+.steps li.active:not(:last-child)::after { background: linear-gradient(90deg, var(--accent) 40%, var(--line) 40%); background-size: 16px 100%; animation: flow 0.8s linear infinite; }
+@keyframes flow { to { background-position: 16px 0; } }
+
+/* durum animasyonları */
+.status { transition: border-color .3s, background .3s; }
+progress { transition: opacity .3s; }
+progress.working::-webkit-progress-value { background-image: linear-gradient(45deg, rgba(255,255,255,.25) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.25) 50%, rgba(255,255,255,.25) 75%, transparent 75%); background-size: 14px 14px; animation: stripes .7s linear infinite; }
+@keyframes stripes { to { background-position: 14px 0; } }
+.crit, .audit-hero, .rec { animation: rise .35s ease; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+
+/* kvkk bandı */
+.kvkk { background: var(--tuik-soft, #fdf2f2); border: 1px solid var(--tuik, #ae1615); border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 10px; }
+[data-theme="dark"] .kvkk { background: #2a1214; }
 
 /* TÜİK kurumsal giydirme (siyah/beyaz + marka kırmızısı) */
 .kurumsal { background: #0a0a0a; color: #fff; font-size: 13px; border-bottom: 3px solid var(--tuik); }
@@ -81,6 +98,7 @@ body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--
 .tech { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
 .tech i { width: 9px; height: 9px; border-radius: 99px; background: var(--bc, var(--accent)); }
 .tech svg { width: 15px; height: 15px; color: var(--bc, var(--accent)); }
+.logo-ic { width: 16px; height: 16px; flex: none; }
 .tech i:has(svg), .tech i svg { border-radius: 0; background: none; }
 
 /* footer */
