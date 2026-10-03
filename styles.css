@@ -59,6 +59,19 @@ body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--
 .steps li.done i { border-color: #1e9e4a; background: #1e9e4a; color: #fff; }
 .steps li.done:not(:last-child)::after { background: #1e9e4a; }
 
+/* TÜİK kurumsal giydirme */
+.kurumsal { background: #0f2a44; color: #fff; font-size: 13px; }
+.kurumsal-in { display: flex; align-items: center; gap: 10px; padding-top: 8px; padding-bottom: 8px; }
+.k-flag { width: 26px; height: 18px; flex: none; border-radius: 3px;
+  background: linear-gradient(#e30a17 0 100%); position: relative; }
+.k-flag::after { content: "☾"; color: #fff; font-size: 12px; position: absolute; inset: 0; display: grid; place-items: center; }
+.k-right { margin-left: auto; opacity: .7; font-size: 12px; }
+/* teknoloji şeridi */
+.techstrip { border-bottom: 1px solid var(--line); background: var(--bg2); }
+.techstrip-in { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
+.tech { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
+.tech i { width: 9px; height: 9px; border-radius: 99px; background: var(--bc, var(--accent)); }
+
 /* üst menü + rapor tablosu */
 .topnav { display: flex; gap: 6px; }
 .topnav .btn.active { border-color: var(--accent); color: var(--accent); }

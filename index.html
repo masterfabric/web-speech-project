@@ -5,10 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
   <title>web-speech-project — Servis Bazlı Ses Analizi</title>
-  <link rel="stylesheet" href="./styles.css?v=8" />
+  <link rel="stylesheet" href="./styles.css?v=9" />
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
+  <div class="kurumsal">
+    <div class="wrap kurumsal-in">
+      <span class="k-flag"></span>
+      <span><b>Türkiye İstatistik Kurumu</b> · Hanehalkı İşgücü Araştırması (HİA) · Alo124 Kalite Denetim</span>
+      <span class="k-right">Eğitim amaçlı prototip</span>
+    </div>
+  </div>
   <header class="topbar">
     <div class="wrap topbar-in">
       <div class="brand">
@@ -29,6 +36,18 @@
       </div>
     </div>
   </header>
+  <div class="techstrip">
+    <div class="wrap techstrip-in">
+      <span class="muted small">Altyapı:</span>
+      <span class="tech" style="--bc:#4d9fff"><i></i>faster-whisper</span>
+      <span class="tech" style="--bc:#c084fc"><i></i>opencode · muse-spark 1.3</span>
+      <span class="tech" style="--bc:#3ddc84"><i></i>tectonic LaTeX</span>
+      <span class="tech" style="--bc:#26a69a"><i></i>FastAPI</span>
+      <span class="tech" style="--bc:#7dd3a8"><i></i>FFmpeg</span>
+      <span class="tech" style="--bc:#5b9bd5"><i></i>SQLite</span>
+      <span class="tech" style="--bc:#f2c94c"><i></i>Vanilla JS</span>
+    </div>
+  </div>
   <div id="netBanner" class="netbanner">İnternet bağlantısı yok — model indirme ve servis çağrıları çalışmayabilir. Kayıtlı sonuçlar görüntülenebilir.</div>
 
   <main class="wrap" id="workView">
@@ -175,6 +194,6 @@
       document.getElementById("year").textContent = new Date().getFullYear();
     })();
   </script>
-  <script src="./app.js?v=8"></script>
+  <script src="./app.js?v=9"></script>
 </body>
 </html>
