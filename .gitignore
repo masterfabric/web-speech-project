@@ -1,0 +1,22 @@
+# .venv / model cache
+backend/.venv/
+backend/__pycache__/
+backend/data/app.db
+backend/data/reports/
+backend/uploads/
+*.conv16k.wav
+*.1-*.wav
+*.2-*.wav
+
+# python
+__pycache__/
+*.pyc
+
+# macOS / editör
+.DS_Store
+.vscode/
+.idea/
+
+# geçici
+/tmp/
+*.log

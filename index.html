@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>web-speech-project — Servis Bazlı Ses Analizi</title>
+  <link rel="stylesheet" href="./styles.css?v=8" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-in">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">◉</span>
+        <div>
+          <strong>web-speech-project</strong>
+          <small>Ses → metin + duygu skoru (servis bazlı)</small>
+        </div>
+      </div>
+      <div class="top-actions">
+        <nav class="topnav">
+          <button id="navWork" class="btn ghost active" type="button">Çalışma</button>
+          <button id="navReports" class="btn ghost" type="button">Raporlar</button>
+        </nav>
+        <span id="netDot" class="pill" title="İnternet bağlantısı">● çevrimiçi</span>
+        <span id="backendDot" class="pill svc" title="Servis durumu"><i class="dot"></i><span id="backendTxt">servis…</span></span>
+        <button id="themeToggle" class="btn ghost icon-btn" type="button" aria-label="Tema değiştir"><i data-lucide="moon"></i></button>
+      </div>
+    </div>
+  </header>
+  <div id="netBanner" class="netbanner">İnternet bağlantısı yok — model indirme ve servis çağrıları çalışmayabilir. Kayıtlı sonuçlar görüntülenebilir.</div>
+
+  <main class="wrap" id="workView">
+    <div id="backBar" style="display:none;margin-top:12px">
+      <button id="btnBackReports" class="btn ghost" type="button">← Raporlara Dön</button>
+    </div>
+    <section class="hero-card">
+      <div class="hero-text">
+        <h1>Ses dosyanı bırak, servis transkript + skor üretsin</h1>
+        <p class="muted">İşlem Python backend'de (faster-whisper), kayıtlar servis tarafında SQLite'da. Tarayıcı sadece istemci.</p>
+      </div>
+      <ol class="steps">
+        <li id="step1" class="active"><i>1</i><span>Yükle</span></li>
+        <li id="step2"><i>2</i><span>Servise gönder</span></li>
+        <li id="step3"><i>3</i><span>Skorla + indir</span></li>
+      </ol>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. Ses dosyası</h2>
+        <input id="fileInput" type="file" accept=".wav,.mp3,.m4a,.aac,.ogg,.flac,.mp4,audio/*" hidden />
+        <div id="dropZone" class="drop big" tabindex="0" role="button" aria-label="Ses dosyası seç">
+          <div class="drop-ico">♪</div>
+          <strong>Dosyayı buraya bırak</strong>
+          <span>veya seçmek için tıkla · wav · mp3 · m4a · aac · ogg · flac · mp4</span>
+        </div>
+        <div id="fileChip" class="filechip" style="display:none"></div>
+        <audio id="player" controls></audio>
+        <div id="fileInfo" class="muted small"></div>
+      </section>
+
+      <section class="card">
+        <h2>2. Servisle çalıştır</h2>
+        <label class="field">
+          <span>Model (servis)</span>
+          <select id="asrModel">
+            <option value="tiny">tiny — hızlı</option>
+            <option value="base" selected>base — dengeli</option>
+            <option value="small">small — iyi</option>
+            <option value="medium">medium — en doğru (~1.5GB)</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Dil</span>
+          <select id="lang">
+            <option value="turkish" selected>Türkçe</option>
+            <option value="english">English</option>
+            <option value="auto">Auto</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Referans hafta (örn: 3-9 Haziran)</span>
+          <input id="refhafta" placeholder="boş bırakılabilir" />
+        </label>
+        <button id="btnRun" class="btn primary" type="button">Servise Gönder + Skorla</button>
+      </section>
+    </div>
+
+    <section class="card">
+      <div id="status" class="status">Hazır.</div>
+      <progress id="progress" max="100" value="0"></progress>
+      <div class="card-head">
+        <h2>3. Transkript</h2>
+        <div class="row">
+          <button id="btnSrt" class="btn ghost" type="button">SRT</button>
+          <button id="btnVtt" class="btn ghost" type="button">VTT</button>
+          <button id="btnJson" class="btn ghost" type="button">JSON</button>
+          <button id="btnTex" class="btn ghost" type="button">TEX</button>
+        </div>
+      </div>
+      <div id="transcript" class="transcript">Henüz çıktı yok. Dosya seçip servise gönder.</div>
+      <div id="parts" class="muted small" style="margin-top:8px"></div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>4. Skorlar</h2>
+        <div id="scores" class="scores">—</div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>5. Kayıtlar (servis)</h2>
+          <button id="btnRecords" class="btn ghost" type="button">Yenile</button>
+        </div>
+        <p class="muted small">Her işlem otomatik kaydedilir (SQLite).</p>
+        <ul id="records" class="records"></ul>
+      </section>
+    </div>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>6. Denetim — TÜİK uyum (T1-T13)</h2>
+        <div class="row">
+          <span class="pill" title="Transkript sonrası analiz motoru">opencode · muse-spark 1.3</span>
+          <span id="auditScore" class="pill">—</span>
+        </div>
+      </div>
+      <div class="row">
+        <button id="btnPdfView" class="btn ghost" type="button">PDF Önizle</button>
+        <button id="btnPdfDown" class="btn ghost" type="button">PDF İndir</button>
+      </div>
+      <div id="audit" class="scores">Henüz analiz yok. Servis transkript sonrası otomatik denetler.</div>
+      <iframe id="pdfFrame" style="width:100%;height:480px;border:1px solid var(--line);border-radius:12px;margin-top:10px;display:none"></iframe>
+    </section>
+
+    <footer class="foot muted small">web-speech-project · servis bazlı · <span id="year"></span></footer>
+  </main>
+
+  <main class="wrap" id="reportsView" style="display:none">
+    <section class="card">
+      <div class="card-head">
+        <h2>Arşivlenmiş Raporlar (LaTeX)</h2>
+        <button id="btnReportsReload" class="btn ghost" type="button">Yenile</button>
+      </div>
+      <p class="muted small">Her biten işin .tex + .pdf hali servis tarafında saklanır.</p>
+      <div style="overflow-x:auto">
+      <table class="tbl">
+        <thead><tr><th>Dosya</th><th>Ver.</th><th>Tarih</th><th>Skor</th><th>Model</th><th>Dil</th><th>Süre</th><th>İşlemler</th></tr></thead>
+        <tbody id="reportsBody"><tr><td colspan="7">yükleniyor…</td></tr></tbody>
+      </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const btn = document.getElementById("themeToggle");
+      const saved = localStorage.getItem("wsp-theme");
+      const sys = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      root.dataset.theme = saved || sys;
+      const icon = () => {
+        btn.innerHTML = `<i data-lucide="${root.dataset.theme === "dark" ? "moon" : "sun"}"></i>`;
+        if (window.lucide) lucide.createIcons();
+      };
+      icon();
+      btn.onclick = () => {
+        root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+        localStorage.setItem("wsp-theme", root.dataset.theme);
+        icon();
+      };
+      document.getElementById("year").textContent = new Date().getFullYear();
+    })();
+  </script>
+  <script src="./app.js?v=8"></script>
+</body>
+</html>
